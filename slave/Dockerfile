@@ -1,5 +1,7 @@
-FROM postgres:11
-RUN apt-get update && apt-get --assume-yes install iputils-ping && apt-get install --assume-yes ssh && apt-get install --assume-yes gosu
+FROM postgres:9.6-alpine
+ENV GOSU_VERSION 1.10
+ADD ./gosu /usr/bin/
+RUN chmod +x /usr/bin/gosu
 COPY ./setup-slave.sh /setup-slave.sh
 RUN chmod +x /setup-slave.sh
 ENTRYPOINT ["/setup-slave.sh"]
